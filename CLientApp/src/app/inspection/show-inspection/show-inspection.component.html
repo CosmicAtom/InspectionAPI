@@ -1,0 +1,90 @@
+  <!-- Add inspection type button-->
+  <button type="button" class="btn btn-primary float-end m-2" data-bs-toggle="modal" 
+  data-bs-target="#staticBackdrop" (click)="modalAdd()">
+    Add New Inspection
+  </button>
+
+<!-- show inspection type button -->
+<button type="button" class="btn btn-secondary float-end m-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Show Inspection Type
+  </button>
+
+<table class="table table-striped">
+    <thead>
+        <th>Id</th>
+        <th>Inspection Iype</th>
+        <th>Status</th>
+        <th>Comments</th>
+        <th>Option</th>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of inspectionList$|async">
+            <td>{{ item.id }}</td>
+            <td>{{inspectionTypeMap.get(item.inspectionTypeId)}}</td>
+            <!-- <td>{{ item.inspectionTypeId }}</td> -->
+            <td>{{ item.status }}</td>
+            <td>{{ item.comments }}</td>
+            <td>
+              <button class="btn btn-outline-primary me-2 mb-1"
+              (click)="modalEdit(item)"data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                  <i class="bi bi-pencil-square"></i>
+              </button>
+              <button class="btn btn-outline-danger me-2 mb-1"
+              (click)="delete(item)">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="alert alert-success" role="alert" id="add-success-alert">
+  Inspection Succesfully Added!
+</div>
+<div class="alert alert-success" role="alert" id="update-success-alert">
+  Inspection Succesfully Update!
+</div>
+<div class="alert alert-success" role="alert" id="delete-success-alert">
+  Inspection Succesfully Deleted!
+</div> 
+  
+  <!-- Show Inspection Type Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Inspection Type</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <ul *ngFor="let type of inspectionTypeList$|async">
+                <li>{{type.id}}-{{type.inspectionName}}</li>
+          </ul>
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+  
+  <!-- Add New Inspection Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">{{modalTitle}}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+          (click)="modalClose()" id="add-edit-modal-close"></button>
+        </div>
+        <div class="modal-body">
+          <app-add-edit-inspection [inspection]="inspection" *ngIf="activateAddEditInspectionComponet">
+          </app-add-edit-inspection>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
